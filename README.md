@@ -1,8 +1,26 @@
 # Toggl::Worktime
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/toggl/worktime`. To experiment with that code, run `bin/console` for an interactive prompt.
+This gem provides a command `toggl-worktime`, that summarises your Toggl time entries into working time chunks, which is useful for reporting your working hours.
+You can easily report your working hours from its output.
 
-TODO: Delete this and the text above, and describe your gem
+Weekday
+
+```console
+$ toggle-worktime 6 12
+Tomoya Kabe
+worktime
+2017-06-12 09:54:34 - 2017-06-12 12:40:45
+2017-06-12 13:29:09 - 2017-06-12 19:23:23
+```
+
+Weekend
+
+```console
+$ toggle-worktime 6 10
+Tomoya Kabe
+worktime
+nil - nil
+```
 
 ## Installation
 
@@ -22,7 +40,9 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```console
+toggl-worktime MONTH DAY
+```
 
 ## Development
 
