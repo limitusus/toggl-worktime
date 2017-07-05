@@ -1,0 +1,31 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+$LOAD_PATH << File.expand_path("#{File.dirname __FILE__}/../lib")
+
+require 'bundler'
+Bundler.require
+
+require 'rubygems'
+require 'toggl/worktime'
+
+Version = Toggl::Worktime::VERSION
+MAX_WORKING_INTERVAL = 10
+DAY_BEGIN_HOUR = 6
+DEFAULT_TIMEZONE = 'Asia/Tokyo'
+ONE_DAY_MINUTES = 24 * 60
+
+driver = Toggl::Worktime::Driver.new
+
+month = ARGV[0].to_i
+day = ARGV[1].to_i
+hour = DAY_BEGIN_HOUR
+timezone = DEFAULT_TIMEZONE
+
+driver.merge!(month, day, hour, timezone)
+user = driver.me
+
+puts user['fullname']
+puts 'worktime'
+
+driver.write
