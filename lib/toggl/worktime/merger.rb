@@ -30,13 +30,18 @@ module Toggl
       def time_entries_each
         zone_offset = Toggl::Worktime::Time.zone_offset(DEFAULT_TIMEZONE)
         @time_entries.each do |te|
-          start = DateTime.parse(te['start']).new_offset(zone_offset)
-          stop = DateTime.parse(te['stop']).new_offset(zone_offset)
+          start = parse_date(te['start'], zone_offset)
+          stop = parse_date(te['stop'], zone_offset)
           @last_stop = stop
           @current_start = start if @current_start.nil?
           @current_stop = stop if @current_stop.nil?
           yield [start, stop]
         end
+      end
+
+      def parse_date(date, zone_offset)
+        return nil if date.nil?
+        DateTime.parse(date).new_offset(zone_offset)
       end
 
       def continuing(start)
