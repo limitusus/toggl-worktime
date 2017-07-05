@@ -1,7 +1,12 @@
-require "toggl/worktime/version"
+# frozen_string_literal: true
+
+require 'togglv8'
+require 'json'
+require 'toggl/worktime/version'
 
 module Toggl
   module Worktime
-    # Your code goes here...
+    include 'toggl/worktime/merger'
+    include 'toggl/worktime/timezone'
   end
 end
