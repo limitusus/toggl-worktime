@@ -28,7 +28,7 @@ module Toggl
       end
 
       def time_entries_each
-        zone_offset = Toggl::Worktime::Timezone.zone_offset(DEFAULT_TIMEZONE)
+        zone_offset = Toggl::Worktime::Time.zone_offset(DEFAULT_TIMEZONE)
         @time_entries.each do |te|
           start = DateTime.parse(te['start']).new_offset(zone_offset)
           stop = DateTime.parse(te['stop']).new_offset(zone_offset)
