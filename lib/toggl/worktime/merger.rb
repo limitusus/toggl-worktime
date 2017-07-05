@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-# Timezone merger
 module Toggl
   module Worktime
+    # Time-entries merger
     class Merger
       def initialize(time_entries)
         @time_entries = time_entries
