@@ -24,8 +24,6 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_dependency 'togglv8'
-  spec.add_dependency 'tzinfo'
-  spec.add_dependency 'time_with_zone'
   spec.add_development_dependency 'awesome_print'
   spec.add_development_dependency 'pry'
   spec.add_development_dependency 'rb-readline'
