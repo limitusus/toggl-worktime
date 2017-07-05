@@ -40,6 +40,18 @@ Or install it yourself as:
 
 ## Usage
 
+### Toggl API Token
+
+Write your Toggl API token on to `~/.toggl`.
+
+```
+abcdef0123456789
+```
+
+You can get your API token from Toggl at your profile settings page.
+
+### Just run
+
 ```console
 toggl-worktime MONTH DAY
 ```
