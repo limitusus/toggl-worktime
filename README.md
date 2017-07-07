@@ -6,7 +6,7 @@ You can easily report your working hours from its output.
 Weekday
 
 ```console
-$ toggle-worktime 6 12
+$ toggl-worktime 6 12
 Tomoya Kabe
 worktime
 2017-06-12 09:54:34 - 2017-06-12 12:40:45
@@ -16,7 +16,7 @@ worktime
 Weekend
 
 ```console
-$ toggle-worktime 6 10
+$ toggl-worktime 6 10
 Tomoya Kabe
 worktime
 nil - nil
