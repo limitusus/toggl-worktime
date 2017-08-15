@@ -21,7 +21,7 @@ module Toggl
           end
           work_time << [@current_start, @current_stop]
           @current_start = start
-          @current_stop = nil
+          @current_stop = stop
         end
         work_time << [@current_start, @last_stop]
         work_time
