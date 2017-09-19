@@ -44,7 +44,7 @@ module Toggl
 
       def total_time
         time = @merger.total_time
-        total_seconds = time.numerator
+        total_seconds = (time * 86400).to_i
         hours = total_seconds / (60 * 60)
         minutes = (total_seconds - (hours * 60 * 60)) / 60
         seconds = total_seconds % 60
