@@ -26,3 +26,5 @@ puts user['fullname']
 puts 'worktime'
 
 driver.write
+
+puts "Total worktime: #{driver.total_time}"

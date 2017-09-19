@@ -41,6 +41,15 @@ module Toggl
       def time_expr(t)
         t ? t.strftime('%F %T') : 'nil'
       end
+
+      def total_time
+        time = @merger.total_time
+        total_seconds = time.numerator
+        hours = total_seconds / (60 * 60)
+        minutes = (total_seconds - (hours * 60 * 60)) / 60
+        seconds = total_seconds % 60
+        format("%02d:%02d:%02d", hours, minutes, seconds)
+      end
     end
   end
 end

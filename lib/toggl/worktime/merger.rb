@@ -4,12 +4,15 @@ module Toggl
   module Worktime
     # Time-entries merger
     class Merger
+      attr_reader :total_time
+
       def initialize(time_entries)
         @time_entries = time_entries
         @current_start = nil
         @current_stop = nil
         @continuing = true
         @last_stop = nil
+        @total_time = 0
       end
 
       def merge
@@ -35,6 +38,7 @@ module Toggl
           @last_stop = stop
           @current_start = start if @current_start.nil?
           @current_stop = stop if @current_stop.nil?
+          @total_time += stop - start
           yield [start, stop]
         end
       end
