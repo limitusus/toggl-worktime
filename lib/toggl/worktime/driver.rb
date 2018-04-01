@@ -5,6 +5,7 @@ module Toggl
     # Toggle API driver
     class Driver
       attr_reader :toggl
+      attr_reader :work_time
 
       def initialize
         @toggl = TogglV8::API.new
