@@ -6,8 +6,12 @@ module Toggl
     class Merger
       attr_reader :total_time
 
-      def initialize(time_entries)
+      ONE_DAY_MINUTES = 24 * 60
+
+      def initialize(time_entries, timezone, max_working_interval)
         @time_entries = time_entries
+        @timezone = timezone
+        @max_working_interval = max_working_interval
         @current_start = nil
         @current_stop = nil
         @continuing = true
@@ -31,14 +35,18 @@ module Toggl
       end
 
       def time_entries_each
-        zone_offset = Toggl::Worktime::Time.zone_offset(DEFAULT_TIMEZONE)
+        zone_offset = Toggl::Worktime::Time.zone_offset(@timezone)
         @time_entries.each do |te|
           start = parse_date(te['start'], zone_offset)
           stop = parse_date(te['stop'], zone_offset)
           @last_stop = stop
           @current_start = start if @current_start.nil?
           @current_stop = stop if @current_stop.nil?
-          @total_time += stop - start
+          if start.nil? || stop.nil?
+            warn "start or stop time is nil: total time may be incomplete"
+          else
+            @total_time += stop - start
+          end
           yield [start, stop]
         end
       end
@@ -49,8 +57,9 @@ module Toggl
       end
 
       def continuing(start)
+        return true if @current_stop.nil?
         interval = (start - @current_stop) * ONE_DAY_MINUTES
-        @continuing = interval < MAX_WORKING_INTERVAL
+        @continuing = interval < @max_working_interval
       end
     end
   end
