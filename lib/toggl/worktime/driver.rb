@@ -7,8 +7,9 @@ module Toggl
       attr_reader :toggl
       attr_reader :work_time
 
-      def initialize
+      def initialize(max_working_interval: 10)
         @toggl = TogglV8::API.new
+        @max_working_interval = max_working_interval
         @merger = nil
         @work_time = nil
       end
@@ -27,7 +28,7 @@ module Toggl
 
       def merge!(month, day, hour, timezone)
         time_entries = time_entries(month, day, hour, timezone)
-        @merger = Toggl::Worktime::Merger.new(time_entries)
+        @merger = Toggl::Worktime::Merger.new(time_entries, timezone, @max_working_interval)
         @work_time = @merger.merge
       end
 

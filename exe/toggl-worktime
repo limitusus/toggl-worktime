@@ -10,9 +10,8 @@ Version = Toggl::Worktime::VERSION
 MAX_WORKING_INTERVAL = 10
 DAY_BEGIN_HOUR = 6
 DEFAULT_TIMEZONE = 'Asia/Tokyo'
-ONE_DAY_MINUTES = 24 * 60
 
-driver = Toggl::Worktime::Driver.new
+driver = Toggl::Worktime::Driver.new(max_working_interval: MAX_WORKING_INTERVAL)
 
 month = ARGV[0].to_i
 day = ARGV[1].to_i
