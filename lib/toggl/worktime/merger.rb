@@ -42,7 +42,11 @@ module Toggl
           @last_stop = stop
           @current_start = start if @current_start.nil?
           @current_stop = stop if @current_stop.nil?
-          @total_time += stop - start
+          if start.nil? || stop.nil?
+            warn "start or stop time is nil: total time may be incomplete"
+          else
+            @total_time += stop - start
+          end
           yield [start, stop]
         end
       end
@@ -53,6 +57,7 @@ module Toggl
       end
 
       def continuing(start)
+        return true if @current_stop.nil?
         interval = (start - @current_stop) * ONE_DAY_MINUTES
         @continuing = interval < @max_working_interval
       end
