@@ -50,6 +50,10 @@ abcdef0123456789
 
 You can get your API token from Toggl at your profile settings page.
 
+NOTE: as of togglv8 v1.2.1, `.toggl` file **MUST NOT** end with a newline (`\010` or LF).
+The recommended way to create the file is `echo -n 'YOUR_TOGGL_API_TOKEN' > ~/.toggl`.
+This issue [will be fixed in the next togglv8 release](https://github.com/kanet77/togglv8/pull/21).
+
 ### Just run
 
 ```console
