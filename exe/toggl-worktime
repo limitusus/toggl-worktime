@@ -3,15 +3,22 @@
 
 $LOAD_PATH << File.expand_path("#{File.dirname __FILE__}/../lib")
 
+require 'optparse'
 require 'rubygems'
 require 'toggl/worktime'
 
 Version = Toggl::Worktime::VERSION
-MAX_WORKING_INTERVAL = 10
-DAY_BEGIN_HOUR = 6
-DEFAULT_TIMEZONE = 'Asia/Tokyo'
+config_file = "#{ENV['HOME']}/.toggl_worktime"
+debug = false
 
-driver = Toggl::Worktime::Driver.new(max_working_interval: MAX_WORKING_INTERVAL)
+opt = OptionParser.new
+opt.on('-c CONFIG', '--config CONFIG') { |v| config_file = v }
+opt.on('--debug') { |v| debug = v }
+opt.parse!(ARGV)
+
+config = Toggl::Worktime::Config.new(path: config_file)
+driver = Toggl::Worktime::Driver.new(config: config)
+p config if debug
 
 if ARGV.size == 3
   year, month, day = *ARGV.map(&:to_i)
@@ -22,10 +29,7 @@ else
   raise ArgumentError, 'Usage: toggl-worktime [YEAR] MONTH DAY'
 end
 
-hour = DAY_BEGIN_HOUR
-timezone = DEFAULT_TIMEZONE
-
-driver.merge!(year, month, day, hour, timezone)
+driver.merge!(year, month, day)
 user = driver.me
 
 puts user['fullname']

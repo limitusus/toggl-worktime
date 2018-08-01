@@ -7,16 +7,16 @@ module Toggl
       attr_reader :toggl
       attr_reader :work_time
 
-      def initialize(max_working_interval: 10)
+      def initialize(config:)
         @toggl = TogglV8::API.new
-        @max_working_interval = max_working_interval
+        @config = config
         @merger = nil
         @work_time = nil
       end
 
-      def time_entries(year, month, day, hour, timezone)
-        offset = Toggl::Worktime::Time.zone_offset(timezone)
-        beginning_day = DateTime.new(year, month, day, hour, 0, 0, offset)
+      def time_entries(year, month, day)
+        offset = Toggl::Worktime::Time.zone_offset(@config.timezone)
+        beginning_day = DateTime.new(year, month, day, @config.day_begin_hour, 0, 0, offset)
         ending_day = beginning_day + 1
         toggl.get_time_entries(start_date: beginning_day.iso8601, end_date: ending_day.iso8601)
       end
@@ -25,9 +25,9 @@ module Toggl
         @toggl.me(true)
       end
 
-      def merge!(year, month, day, hour, timezone)
-        time_entries = time_entries(year, month, day, hour, timezone)
-        @merger = Toggl::Worktime::Merger.new(time_entries, timezone, @max_working_interval)
+      def merge!(year, month, day)
+        time_entries = time_entries(year, month, day)
+        @merger = Toggl::Worktime::Merger.new(time_entries, @config)
         @work_time = @merger.merge
       end
 
