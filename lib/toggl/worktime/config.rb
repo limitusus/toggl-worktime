@@ -1,7 +1,10 @@
+# frozen_string_literal: true
+
 require 'yaml'
 
 module Toggl
   module Worktime
+    # Config for Toggl::Worktime
     class Config
       attr_accessor :foo
 
@@ -16,7 +19,7 @@ module Toggl
         working_interval_min: 10,
         day_begin_hour: 6,
         timezone: 'Asia/Tokyo',
-        ignore_conditions: [],
+        ignore_conditions: []
       }.freeze
 
       ATTRS.each do |attr|
@@ -24,7 +27,6 @@ module Toggl
       end
 
       def initialize(args)
-        #attr_set(args) if args.key?(:foo)
         c = self.class.load_config(args[:path])
         attr_set(c)
       end
@@ -38,7 +40,9 @@ module Toggl
       private
 
       def attr_set(hash)
-        ATTRS.each { |k| send((k.to_s + '=').to_sym, hash.key?(k) ? hash[k] : ATTR_DEFAULTS[k] ) }
+        ATTRS.each do |k|
+          send((k.to_s + '=').to_sym, hash.key?(k) ? hash[k] : ATTR_DEFAULTS[k])
+        end
       end
     end
   end

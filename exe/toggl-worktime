@@ -23,7 +23,7 @@ p config if debug
 if ARGV.size == 3
   year, month, day = *ARGV.map(&:to_i)
 elsif ARGV.size == 2
-  year = DateTime.now.year
+  year = Time.now.year
   month, day = *ARGV.map(&:to_i)
 else
   raise ArgumentError, 'Usage: toggl-worktime [YEAR] MONTH DAY'

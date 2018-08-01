@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'time'
+
 module Toggl
   module Worktime
     # Time-entries merger
@@ -42,7 +44,7 @@ module Toggl
           @current_start = start if @current_start.nil?
           @current_stop = stop if @current_stop.nil?
           if start.nil? || stop.nil?
-            warn "start or stop time is nil: total time may be incomplete"
+            warn 'start or stop time is nil: total time may be incomplete'
           else
             @total_time += stop - start
           end
@@ -52,7 +54,7 @@ module Toggl
 
       def parse_date(date, zone_offset)
         return nil if date.nil?
-        DateTime.parse(date).new_offset(zone_offset)
+        ::Time.parse(date).getlocal(zone_offset)
       end
 
       def continuing(start)

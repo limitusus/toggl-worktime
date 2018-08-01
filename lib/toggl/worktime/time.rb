@@ -4,11 +4,11 @@ module Toggl
   module Worktime
     # Timezone
     module Time
-      # rational
+      # Seconds
       def self.zone_offset(timezone)
         tz = ENV['TZ']
         ENV['TZ'] = timezone
-        offset = DateTime.now.offset
+        offset = ::Time.now.utc_offset
         ENV['TZ'] = tz
         offset
       end
