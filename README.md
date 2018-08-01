@@ -65,6 +65,32 @@ NOTE: as of togglv8 v1.2.1, `.toggl` file **MUST NOT** end with a newline (`\010
 The recommended way to create the file is `echo -n 'YOUR_TOGGL_API_TOKEN' > ~/.toggl`.
 This issue [will be fixed in the next togglv8 release](https://github.com/kanet77/togglv8/pull/21).
 
+### Configuration
+
+Place configuration file in `~/.toggl_worktime`.
+Or you can specify your favorite path with `-c CONFIG` option.
+
+```
+# -*- yaml -*-
+
+# working time interval within <working_interval_min> minutes is ignored
+working_interval_min: 10
+# Split the day at <day_begin_hour> o'clock
+day_begin_hour: 6
+# Timezone
+timezone: Asia/Tokyo
+
+# Time entries which match the condition below will not be counted as working time
+# Multiple conditions can be specified as an array in top level,
+# multiple keys (only "tags" for now) can be specified as hash keys in a condition,
+# and multiple values can be specifeid as an array.
+# Array conditions will be treated as "OR"
+# Hash conditions will be treated as "AND"
+ignore_conditions:
+  - tags:
+      - vacation
+```
+
 ### Just run
 
 ```console

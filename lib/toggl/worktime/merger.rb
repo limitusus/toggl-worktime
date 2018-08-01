@@ -8,10 +8,9 @@ module Toggl
 
       ONE_DAY_MINUTES = 24 * 60
 
-      def initialize(time_entries, timezone, max_working_interval)
+      def initialize(time_entries, config)
         @time_entries = time_entries
-        @timezone = timezone
-        @max_working_interval = max_working_interval
+        @config = config
         @current_start = nil
         @current_stop = nil
         @continuing = true
@@ -35,7 +34,7 @@ module Toggl
       end
 
       def time_entries_each
-        zone_offset = Toggl::Worktime::Time.zone_offset(@timezone)
+        zone_offset = Toggl::Worktime::Time.zone_offset(@config.timezone)
         @time_entries.each do |te|
           start = parse_date(te['start'], zone_offset)
           stop = parse_date(te['stop'], zone_offset)
@@ -59,7 +58,7 @@ module Toggl
       def continuing(start)
         return true if @current_stop.nil?
         interval = (start - @current_stop) * ONE_DAY_MINUTES
-        @continuing = interval < @max_working_interval
+        @continuing = interval < @config.working_interval_min
       end
     end
   end
