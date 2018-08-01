@@ -13,12 +13,19 @@ DEFAULT_TIMEZONE = 'Asia/Tokyo'
 
 driver = Toggl::Worktime::Driver.new(max_working_interval: MAX_WORKING_INTERVAL)
 
-month = ARGV[0].to_i
-day = ARGV[1].to_i
+if ARGV.size == 3
+  year, month, day = *ARGV.map(&:to_i)
+elsif ARGV.size == 2
+  year = DateTime.now.year
+  month, day = *ARGV.map(&:to_i)
+else
+  raise ArgumentError, 'Usage: toggl-worktime [YEAR] MONTH DAY'
+end
+
 hour = DAY_BEGIN_HOUR
 timezone = DEFAULT_TIMEZONE
 
-driver.merge!(month, day, hour, timezone)
+driver.merge!(year, month, day, hour, timezone)
 user = driver.me
 
 puts user['fullname']
