@@ -9,12 +9,14 @@ module Toggl
         working_interval_min
         day_begin_hour
         timezone
+        ignore_conditions
       ].freeze
 
       ATTR_DEFAULTS = {
         working_interval_min: 10,
         day_begin_hour: 6,
         timezone: 'Asia/Tokyo',
+        ignore_conditions: [],
       }.freeze
 
       ATTRS.each do |attr|
