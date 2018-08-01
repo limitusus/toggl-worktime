@@ -13,6 +13,17 @@ worktime
 2017-06-12 13:29:09 - 2017-06-12 19:23:23
 ```
 
+or you can specify year (default is "this" year)
+
+```console
+$ toggl-worktime 2017 6 12
+Tomoya Kabe
+worktime
+2017-06-12 09:54:34 - 2017-06-12 12:40:45
+2017-06-12 13:29:09 - 2017-06-12 19:23:23
+```
+
+
 Weekend
 
 ```console
