@@ -28,13 +28,19 @@ module Toggl
             next
           end
           work_time << [@current_start, @current_stop]
-          @total_time += @current_stop - @current_start
+          count_total_time
           @current_start = start
           @current_stop = stop
         end
         work_time << [@current_start, @last_stop]
-        @total_time += @current_stop - @current_start
+        count_total_time
         work_time
+      end
+
+      def count_total_time
+        return if @current_start.nil? || @current_stop.nil?
+
+        @total_time += @current_stop - @current_start
       end
 
       def time_entries_each
