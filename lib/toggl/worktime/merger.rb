@@ -8,7 +8,7 @@ module Toggl
     class Merger
       attr_reader :total_time
 
-      ONE_DAY_MINUTES = 24 * 60
+      ONE_MINUTE_SECONDS = 60
 
       def initialize(time_entries, config)
         @time_entries = time_entries
@@ -59,7 +59,7 @@ module Toggl
 
       def continuing(start)
         return true if @current_stop.nil?
-        interval = (start - @current_stop) * ONE_DAY_MINUTES
+        interval = (start - @current_stop) / ONE_MINUTE_SECONDS
         @continuing = interval < @config.working_interval_min
       end
     end
