@@ -1,5 +1,12 @@
 # Change Log
 
+## [v0.3.1](https://github.com/limitusus/toggl-worktime/tree/v0.3.1) (2018-09-26)
+[Full Changelog](https://github.com/limitusus/toggl-worktime/compare/v0.3.0...v0.3.1)
+
+**Merged pull requests:**
+
+- Bugfix/interval [\#6](https://github.com/limitusus/toggl-worktime/pull/6) ([limitusus](https://github.com/limitusus))
+
 ## [v0.3.0](https://github.com/limitusus/toggl-worktime/tree/v0.3.0) (2018-08-01)
 [Full Changelog](https://github.com/limitusus/toggl-worktime/compare/v0.2.0...v0.3.0)
 
