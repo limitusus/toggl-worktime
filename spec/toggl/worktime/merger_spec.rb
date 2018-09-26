@@ -178,19 +178,19 @@ RSpec.describe Toggl::Worktime::Merger do
     describe 'total time' do
       context 'detects continuation' do
         include_context 'continuing input'
-        subject {
+        subject do
           merger.merge
           merger.total_time
-        }
+        end
         it { is_expected.to eq total_time }
       end
 
       context 'detects separation' do
         include_context 'separating input'
-        subject {
+        subject do
           merger.merge
           merger.total_time
-        }
+        end
         it { is_expected.to eq total_time }
       end
     end

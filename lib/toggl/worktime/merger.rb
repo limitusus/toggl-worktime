@@ -54,11 +54,13 @@ module Toggl
 
       def parse_date(date, zone_offset)
         return nil if date.nil?
+
         ::Time.parse(date).getlocal(zone_offset)
       end
 
       def continuing(start)
         return true if @current_stop.nil?
+
         interval = (start - @current_stop) / ONE_MINUTE_SECONDS
         @continuing = interval < @config.working_interval_min
       end
