@@ -8,7 +8,7 @@ module Toggl
     class Merger
       attr_reader :total_time
 
-      ONE_DAY_MINUTES = 24 * 60
+      ONE_MINUTE_SECONDS = 60
 
       def initialize(time_entries, config)
         @time_entries = time_entries
@@ -28,10 +28,12 @@ module Toggl
             next
           end
           work_time << [@current_start, @current_stop]
+          @total_time += @current_stop - @current_start
           @current_start = start
           @current_stop = stop
         end
         work_time << [@current_start, @last_stop]
+        @total_time += @current_stop - @current_start
         work_time
       end
 
@@ -45,8 +47,6 @@ module Toggl
           @current_stop = stop if @current_stop.nil?
           if start.nil? || stop.nil?
             warn 'start or stop time is nil: total time may be incomplete'
-          else
-            @total_time += stop - start
           end
           yield [start, stop]
         end
@@ -54,12 +54,14 @@ module Toggl
 
       def parse_date(date, zone_offset)
         return nil if date.nil?
+
         ::Time.parse(date).getlocal(zone_offset)
       end
 
       def continuing(start)
         return true if @current_stop.nil?
-        interval = (start - @current_stop) * ONE_DAY_MINUTES
+
+        interval = (start - @current_stop) / ONE_MINUTE_SECONDS
         @continuing = interval < @config.working_interval_min
       end
     end
