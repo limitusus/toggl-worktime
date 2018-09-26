@@ -28,10 +28,12 @@ module Toggl
             next
           end
           work_time << [@current_start, @current_stop]
+          @total_time += @current_stop - @current_start
           @current_start = start
           @current_stop = stop
         end
         work_time << [@current_start, @last_stop]
+        @total_time += @current_stop - @current_start
         work_time
       end
 
@@ -45,8 +47,6 @@ module Toggl
           @current_stop = stop if @current_stop.nil?
           if start.nil? || stop.nil?
             warn 'start or stop time is nil: total time may be incomplete'
-          else
-            @total_time += stop - start
           end
           yield [start, stop]
         end
