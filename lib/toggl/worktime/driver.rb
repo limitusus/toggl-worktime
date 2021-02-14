@@ -15,6 +15,11 @@ module Toggl
         @merger = nil
         @work_time = nil
         @zone_offset = Toggl::Worktime::Time.zone_offset(@config.timezone)
+        @calendar = nil
+      end
+
+      def calendar(week_begin, year, month)
+        @calendar = Toggl::Worktime::Calendar.new(self, @zone_offset, week_begin, year, month)
       end
 
       def time_entries(year, month, day)
