@@ -9,10 +9,14 @@ require 'toggl/worktime'
 
 Version = Toggl::Worktime::VERSION
 config_file = "#{ENV['HOME']}/.toggl_worktime"
+mode = :default
+week_begin = :Sun
 debug = false
 
 opt = OptionParser.new
 opt.on('-c CONFIG', '--config CONFIG') { |v| config_file = v }
+opt.on('-l', '--calendar', 'Calendar view mode') { mode = :calendar }
+opt.on('-b', '--week-begin=VAL', 'Beginning of the week: Sun, Mon, etc.') { |v| week_begin = v }
 opt.on('--debug') { |v| debug = v }
 opt.parse!(ARGV)
 
@@ -20,21 +24,29 @@ config = Toggl::Worktime::Config.new(path: config_file)
 driver = Toggl::Worktime::Driver.new(config: config)
 p config if debug
 
-if ARGV.size == 3
-  year, month, day = *ARGV.map(&:to_i)
-elsif ARGV.size == 2
-  year = Time.now.year
-  month, day = *ARGV.map(&:to_i)
+case mode
+when :calendar
+  raise ArgumentError, 'Usage: toggl-worktime --cal YEAR MONTH' if ARGV.size != 2
+
+  driver.calendar(week_begin, *ARGV.map(&:to_i)).write
 else
-  raise ArgumentError, 'Usage: toggl-worktime [YEAR] MONTH DAY'
+  case ARGV.size
+  when 3
+    year, month, day = *ARGV.map(&:to_i)
+  when 2
+    year = Time.now.year
+    month, day = *ARGV.map(&:to_i)
+  else
+    raise ArgumentError, 'Usage: toggl-worktime [YEAR] MONTH DAY'
+  end
+
+  driver.merge!(year, month, day)
+  user = driver.me
+
+  puts user['fullname']
+  puts 'worktime'
+
+  driver.write
+
+  puts "Total worktime: #{driver.total_time}"
 end
-
-driver.merge!(year, month, day)
-user = driver.me
-
-puts user['fullname']
-puts 'worktime'
-
-driver.write
-
-puts "Total worktime: #{driver.total_time}"
