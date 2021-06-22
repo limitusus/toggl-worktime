@@ -23,7 +23,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_dependency 'awesome_print'
-  spec.add_dependency 'togglv8'
+  spec.add_dependency 'togglv8-limitusus'
   spec.add_dependency 'tty-table'
   spec.add_development_dependency 'bundler', '~> 1.15'
   spec.add_development_dependency 'pry'
