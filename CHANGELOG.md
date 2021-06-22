@@ -1,12 +1,20 @@
 # Changelog
 
+## [0.4.1](https://github.com/limitusus/toggl-worktime/tree/0.4.1) (2021-06-22)
+
+[Full Changelog](https://github.com/limitusus/toggl-worktime/compare/v0.4.0...0.4.1)
+
+**Merged pull requests:**
+
+- Use patched version of togglv8, for the new API endpoint [\#12](https://github.com/limitusus/toggl-worktime/pull/12) ([limitusus](https://github.com/limitusus))
+
 ## [v0.4.0](https://github.com/limitusus/toggl-worktime/tree/v0.4.0) (2021-02-14)
 
 [Full Changelog](https://github.com/limitusus/toggl-worktime/compare/v0.3.2...v0.4.0)
 
 **Merged pull requests:**
 
-- Use newer rake [\#10](https://github.com/limitusus/toggl-worktime/pull/10) ([limitusus](https://github.com/limitusus))
+- Use newer rake [\#9](https://github.com/limitusus/toggl-worktime/pull/9) ([limitusus](https://github.com/limitusus))
 - Implement calendar mode [\#8](https://github.com/limitusus/toggl-worktime/pull/8) ([limitusus](https://github.com/limitusus))
 
 ## [v0.3.2](https://github.com/limitusus/toggl-worktime/tree/v0.3.2) (2018-09-26)
@@ -15,7 +23,6 @@
 
 **Merged pull requests:**
 
-- Update README [\#11](https://github.com/limitusus/toggl-worktime/pull/11) ([limitusus](https://github.com/limitusus))
 - Deal with empty time slot [\#7](https://github.com/limitusus/toggl-worktime/pull/7) ([limitusus](https://github.com/limitusus))
 
 ## [v0.3.1](https://github.com/limitusus/toggl-worktime/tree/v0.3.1) (2018-09-26)
@@ -36,6 +43,8 @@
 
 **Merged pull requests:**
 
+- Update README [\#11](https://github.com/limitusus/toggl-worktime/pull/11) ([limitusus](https://github.com/limitusus))
+- Use newer rake [\#10](https://github.com/limitusus/toggl-worktime/pull/10) ([limitusus](https://github.com/limitusus))
 - Config YAML [\#5](https://github.com/limitusus/toggl-worktime/pull/5) ([limitusus](https://github.com/limitusus))
 - Specify year [\#4](https://github.com/limitusus/toggl-worktime/pull/4) ([limitusus](https://github.com/limitusus))
 
@@ -82,10 +91,6 @@
 ## [v0.1.1](https://github.com/limitusus/toggl-worktime/tree/v0.1.1) (2017-07-05)
 
 [Full Changelog](https://github.com/limitusus/toggl-worktime/compare/v0.1.0...v0.1.1)
-
-## [v0.1.0](https://github.com/limitusus/toggl-worktime/tree/v0.1.0) (2017-07-05)
-
-[Full Changelog](https://github.com/limitusus/toggl-worktime/compare/26ba950bd4f39528454741a756a12c218178c74e...v0.1.0)
 
 
 
