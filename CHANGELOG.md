@@ -1,8 +1,16 @@
 # Changelog
 
-## [0.4.1](https://github.com/limitusus/toggl-worktime/tree/0.4.1) (2021-06-22)
+## [v0.4.2](https://github.com/limitusus/toggl-worktime/tree/v0.4.2) (2023-05-06)
 
-[Full Changelog](https://github.com/limitusus/toggl-worktime/compare/v0.4.0...0.4.1)
+[Full Changelog](https://github.com/limitusus/toggl-worktime/compare/v0.4.1...v0.4.2)
+
+**Merged pull requests:**
+
+- Use the newer version of togglv8 gem, for a newer version of faraday gem [\#13](https://github.com/limitusus/toggl-worktime/pull/13) ([limitusus](https://github.com/limitusus))
+
+## [v0.4.1](https://github.com/limitusus/toggl-worktime/tree/v0.4.1) (2021-06-22)
+
+[Full Changelog](https://github.com/limitusus/toggl-worktime/compare/v0.4.0...v0.4.1)
 
 **Merged pull requests:**
 
@@ -14,7 +22,8 @@
 
 **Merged pull requests:**
 
-- Use newer rake [\#9](https://github.com/limitusus/toggl-worktime/pull/9) ([limitusus](https://github.com/limitusus))
+- Update README [\#11](https://github.com/limitusus/toggl-worktime/pull/11) ([limitusus](https://github.com/limitusus))
+- Use newer rake [\#10](https://github.com/limitusus/toggl-worktime/pull/10) ([limitusus](https://github.com/limitusus))
 - Implement calendar mode [\#8](https://github.com/limitusus/toggl-worktime/pull/8) ([limitusus](https://github.com/limitusus))
 
 ## [v0.3.2](https://github.com/limitusus/toggl-worktime/tree/v0.3.2) (2018-09-26)
@@ -43,8 +52,6 @@
 
 **Merged pull requests:**
 
-- Update README [\#11](https://github.com/limitusus/toggl-worktime/pull/11) ([limitusus](https://github.com/limitusus))
-- Use newer rake [\#10](https://github.com/limitusus/toggl-worktime/pull/10) ([limitusus](https://github.com/limitusus))
 - Config YAML [\#5](https://github.com/limitusus/toggl-worktime/pull/5) ([limitusus](https://github.com/limitusus))
 - Specify year [\#4](https://github.com/limitusus/toggl-worktime/pull/4) ([limitusus](https://github.com/limitusus))
 
