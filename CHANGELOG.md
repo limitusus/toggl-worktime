@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.5.0](https://github.com/limitusus/toggl-worktime/tree/0.5.0) (2024-06-02)
+
+[Full Changelog](https://github.com/limitusus/toggl-worktime/compare/v0.4.2...0.5.0)
+
+**Merged pull requests:**
+
+- Use togglv9 as Toggl API v8 is deprecated [\#14](https://github.com/limitusus/toggl-worktime/pull/14) ([limitusus](https://github.com/limitusus))
+
 ## [v0.4.2](https://github.com/limitusus/toggl-worktime/tree/v0.4.2) (2023-05-06)
 
 [Full Changelog](https://github.com/limitusus/toggl-worktime/compare/v0.4.1...v0.4.2)
