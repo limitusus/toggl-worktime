@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'togglv8'
+require 'togglv9'
 require 'date'
 require 'json'
 require 'toggl/worktime/version'
