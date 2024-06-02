@@ -10,7 +10,7 @@ module Toggl
       attr_reader :work_time
 
       def initialize(config:)
-        @toggl = TogglV8::API.new
+        @toggl = TogglV9::API.new
         @config = config
         @merger = nil
         @work_time = nil
