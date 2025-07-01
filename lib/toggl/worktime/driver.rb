@@ -40,6 +40,8 @@ module Toggl
               case key
               when 'tags'
                 entry['tags']&.any? { |t| cond[key].include?(t) }
+              when 'project_id'
+                cond[key].include?(entry['project_id'])
               end
             end
           end
