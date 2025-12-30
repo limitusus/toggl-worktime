@@ -22,7 +22,7 @@ RSpec.describe Toggl::Worktime::Merger do
     let(:zone_offset) { 9 * 60 * 60 }
 
     it 'converts correctly to the desired timezone' do
-      dt = merger.parse_date(input_time, zone_offset)
+      dt = Toggl::Worktime::Merger.parse_date(input_time, zone_offset)
       expect(dt.year).to eq 2006
       expect(dt.month).to eq 1
       expect(dt.day).to eq 3

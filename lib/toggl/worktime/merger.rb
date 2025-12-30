@@ -46,8 +46,8 @@ module Toggl
       def time_entries_each
         zone_offset = Toggl::Worktime::Time.zone_offset(@config.timezone)
         @time_entries.sort { |a, b| a['start'] <=> b['start'] }.each do |te|
-          start = parse_date(te['start'], zone_offset)
-          stop = parse_date(te['stop'], zone_offset)
+          start = Merger.parse_date(te['start'], zone_offset)
+          stop = Merger.parse_date(te['stop'], zone_offset)
           @last_stop = stop
           @current_start = start if @current_start.nil?
           @current_stop = stop if @current_stop.nil?
@@ -58,10 +58,12 @@ module Toggl
         end
       end
 
-      def parse_date(date, zone_offset)
-        return nil if date.nil?
+      class << self
+        def parse_date(date, zone_offset)
+          return nil if date.nil?
 
-        ::Time.parse(date).getlocal(zone_offset)
+          ::Time.parse(date).getlocal(zone_offset)
+        end
       end
 
       def continuing(start)

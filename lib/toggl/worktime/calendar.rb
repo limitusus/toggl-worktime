@@ -57,15 +57,14 @@ module Toggl
 
       def fetch
         @day_data = []
+        @driver.merge_multi!(@year, @month, 1, @days_in_month)
         (1..@days_in_month).each do |day|
           dateobj = Date.new(@year, @month, day)
           day_datum = nil
-          if day <= @last_fetch_day
-            @driver.merge!(@year, @month, day)
-            time = @driver.total_time
-            begin_at = @driver.work_time.first[0]&.getlocal(@zone_offset)&.strftime('%T')
-            end_at = @driver.work_time.last[1]&.getlocal(@zone_offset)&.strftime('%T')
-            day_datum = Toggl::Worktime::Day.new(dateobj, time, begin_at, end_at)
+          if @driver.days.include?(day)
+            begin_at = @driver.work_time_map[day].first[0]&.getlocal(@zone_offset)&.strftime('%T')
+            end_at = @driver.work_time_map[day].last[1]&.getlocal(@zone_offset)&.strftime('%T')
+            day_datum = Toggl::Worktime::Day.new(dateobj, @driver.total_time(day: day), begin_at, end_at)
           else
             day_datum = Toggl::Worktime::Day.new(dateobj, 0, '', '')
           end

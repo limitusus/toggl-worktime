@@ -7,26 +7,29 @@ module Toggl
       ONE_DAY_SECONDS = 86_400
 
       attr_reader :toggl
-      attr_reader :work_time
+      attr_reader :work_time_map
+      attr_reader :days
 
       def initialize(config:)
         @toggl = TogglV9::API.new
         @config = config
-        @merger = nil
-        @work_time = nil
         @zone_offset = Toggl::Worktime::Time.zone_offset(@config.timezone)
         @calendar = nil
+        @days = []
+        @merger_map = {}
+        @work_time_map = {}
       end
 
       def calendar(week_begin, year, month)
         @calendar = Toggl::Worktime::Calendar.new(self, @zone_offset, week_begin, year, month)
       end
 
-      def time_entries(year, month, day)
+      # Multi-day time entries in a request
+      def time_entries_multi(year, month, begin_day, end_day)
         beginning_day = ::Time.new(
-          year, month, day, @config.day_begin_hour, 0, 0, @zone_offset
+          year, month, begin_day, @config.day_begin_hour, 0, 0, @zone_offset
         )
-        ending_day = beginning_day + ONE_DAY_SECONDS
+        ending_day = beginning_day + ONE_DAY_SECONDS * (end_day - begin_day + 1)
         start_iso = beginning_day.strftime('%FT%T%:z')
         end_iso = ending_day.strftime('%FT%T%:z')
         toggl.get_time_entries(start_date: start_iso, end_date: end_iso)
@@ -53,15 +56,41 @@ module Toggl
         @toggl.me(true)
       end
 
-      def merge!(year, month, day)
-        time_entries = time_entries(year, month, day)
-        time_entries = filter_entries(time_entries)
-        @merger = Toggl::Worktime::Merger.new(time_entries, @config)
-        @work_time = @merger.merge
+      # Generator: Split time_entries for multiple days into days
+      def split_by_day(entries_multi)
+        current_date = nil
+        beginning_day = nil
+        time_entries = []
+        entries_multi.sort { |a, b| a['start'] <=> b['start'] }.each do |time_entry|
+          start_ts = Toggl::Worktime::Merger.parse_date(time_entry['start'], @zone_offset)
+          if beginning_day.nil? || beginning_day.strftime('%F') != (start_ts - @config.day_begin_hour * 3600).strftime('%F')
+            # Push current buffer
+            unless beginning_day.nil?
+              yield [beginning_day.day, time_entries]
+            end
+            time_entries = []
+            beginning_day = ::Time.new(
+              start_ts.year, start_ts.month, start_ts.day, @config.day_begin_hour, 0, 0, @zone_offset
+            )
+            ending_day = beginning_day + ONE_DAY_SECONDS
+          end
+          time_entries << time_entry
+        end
+        yield [beginning_day.day, time_entries]
       end
 
-      def write
-        @work_time.each do |span|
+      def merge_multi!(year, month, begin_day, end_day)
+        entries_multi = time_entries_multi(year, month, begin_day, end_day)
+        time_entries_filtered_multi = filter_entries(entries_multi)
+        split_by_day(time_entries_filtered_multi) do |day, time_entries|
+          @days << day
+          @merger_map[day] = Toggl::Worktime::Merger.new(time_entries, @config)
+          @work_time_map[day] = @merger_map[day].merge
+        end
+      end
+
+      def write(day)
+        @work_time_map[day].each do |span|
           begin_s = time_expr(span[0])
           end_s = time_expr(span[1])
           puts "#{begin_s} - #{end_s}"
@@ -72,8 +101,9 @@ module Toggl
         time ? time.getlocal(@zone_offset).strftime('%F %T') : 'nil'
       end
 
-      def total_time
-        total_seconds = @merger.total_time.to_i
+      def total_time(day:)
+        merger = @merger_map[day]
+        total_seconds = merger.total_time.to_i
         hours = total_seconds / (60 * 60)
         minutes = (total_seconds - (hours * 60 * 60)) / 60
         seconds = total_seconds % 60

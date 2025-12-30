@@ -40,13 +40,13 @@ else
     raise ArgumentError, 'Usage: toggl-worktime [YEAR] MONTH DAY'
   end
 
-  driver.merge!(year, month, day)
+  driver.merge_multi!(year, month, day, day)
   user = driver.me
 
   puts user['fullname']
   puts 'worktime'
 
-  driver.write
+  driver.write(day)
 
-  puts "Total worktime: #{driver.total_time}"
+  puts "Total worktime: #{driver.total_time(day: day)}"
 end
